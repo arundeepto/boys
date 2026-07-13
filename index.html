@@ -256,6 +256,7 @@
   #pdf-render th,#pdf-render td{border:1px solid #999;padding:7px 9px;}
   #pdf-render th{background:#eee;}
   #pdf-render .sign{margin-top:50px;font-size:.9rem;}
+  #pdf-render .pdf-attachment{margin-top:60px;padding-top:30px;border-top:1px dashed #bbb;}
 </style>
 </head>
 <body>
@@ -309,6 +310,7 @@
 
       <label>Room Number / Location (e.g. 102, Washroom, Corridor)</label>
       <input type="text" id="room-number" placeholder="Enter room number">
+      <div id="existing-room-notice" class="hidden" style="margin-top:8px;padding:10px 12px;border:1px solid var(--ochre);background:var(--paper-2);border-radius:6px;font-size:.85rem;color:var(--teal-dk);"></div>
 
       <label>Demand / Issue List</label>
       <div id="items-container"></div>
@@ -344,25 +346,45 @@
 
 <!-- Off-screen printable template used for PDF export -->
 <div id="pdf-render">
-  <h2>করতোয়া ছাত্রাবাস</h2>
-  <div class="pdf-sub">নীলফামারী মেডিকেল কলেজ — ব্লকভিত্তিক চাহিদা আবেদন</div>
   <p id="pdf-date"></p>
-  <p>বরাবর,<br>অধ্যক্ষ মহোদয়,<br>নীলফামারী মেডিকেল কলেজ, নীলফামারী।</p>
+  <p>বরাবর,<br>অধ্যক্ষ মহোদয়,<br>নীলফামারী মেডিকেল কলেজ,<br>নীলফামারী।</p>
   <p><strong>বিষয়:</strong> করতোয়া ছাত্রাবাসের <span id="pdf-block-name"></span>-এর মেরামত ও প্রয়োজনীয় সরঞ্জামাদি সরবরাহের আবেদন।</p>
-  <p>জনাব,<br>
-  সবিনয় নিবেদন এই যে, আমরা করতোয়া ছাত্রাবাসের <span id="pdf-block-name-2"></span>-এর আবাসিক শিক্ষার্থী। নিচে রুমভিত্তিক চাহিদা ও সমস্যার তালিকা সংযুক্ত করা হলো। বিষয়গুলো বিবেচনা করে দ্রুত প্রয়োজনীয় ব্যবস্থা গ্রহণের জন্য আকুল অনুরোধ জানাচ্ছি।</p>
-
-  <table id="pdf-table">
-    <thead>
-      <tr><th style="width:15%;">রুম/স্থান</th><th>চাহিদা / সমস্যার বিবরণ</th><th style="width:20%;">মন্তব্য</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <p>
+    জনাব,<br>
+    সবিনয় নিবেদন এই যে, আমরা নীলফামারী মেডিকেল কলেজের করতোয়া ছাত্রাবাসের <span id="pdf-block-name-2"></span>-এর আবাসিক শিক্ষার্থী।
+    বর্তমানে আমাদের ব্লকের বেশ কিছু কক্ষের বৈদ্যুতিক ও স্যানিটারি সরঞ্জামাদি নষ্ট হয়ে যাওয়ায় আমরা দৈনন্দিন পড়াশোনা ও বসবাসের ক্ষেত্রে সমস্যার সম্মুখীন হচ্ছি।
+    রুমভিত্তিক চাহিদা ও সমস্যার বিস্তারিত বিবরণ সংযুক্ত তালিকায় দেওয়া হলো।
+  </p>
+  <p>
+    এমতাবস্থায়, আমাদের ব্লকের স্বাভাবিক পরিবেশ বজায় রাখতে এবং ছাত্রাবাসের সুযোগ-সুবিধা নিশ্চিত করতে প্রয়োজনীয় সরঞ্জামাদি সরবরাহ ও মেরামতের জন্য
+    আপনার সদয় অনুমতি ও ব্যবস্থা গ্রহণের প্রার্থনা জানাচ্ছি। আমাদের মোট চাহিদার সারসংক্ষেপ নিচে দেওয়া হলো:
+  </p>
+  <p><strong>চাহিদার সারসংক্ষেপ:</strong> <span id="pdf-summary-line"></span></p>
+  <p>
+    অতএব, মহোদয়ের নিকট আকুল আবেদন, আমাদের ব্লকের শিক্ষার্থীদের সামগ্রিক সমস্যার গুরুত্ব বিবেচনা করে দ্রুত প্রয়োজনীয় ব্যবস্থা গ্রহণ করলে
+    আমরা বিশেষভাবে উপকৃত হব।
+  </p>
 
   <div class="sign">
     বিনীত,<br>
     আপনার অনুগত,<br>
     করতোয়া ছাত্রাবাসের <span id="pdf-block-name-3"></span>-এর আবাসিক শিক্ষার্থীবৃন্দ।
+  </div>
+
+  <div class="pdf-attachment">
+    <p><strong>সংযুক্তি: রুমভিত্তিক চাহিদার তালিকা</strong></p>
+    <table id="pdf-table">
+      <thead>
+        <tr><th style="width:15%;">রুম নং/স্থান</th><th>প্রয়োজনীয় কাজ ও মালামাল</th><th style="width:16%;">পরিমাণ</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="sign">
+      সুপারিশক্রমে,<br>
+      হোস্টেল সুপার,<br>
+      করতোয়া ছাত্রাবাস।
+    </div>
   </div>
 </div>
 
@@ -372,12 +394,12 @@
    Go to Firebase console → Project settings → Your apps → SDK config
    ========================================================= */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBffeodxZ7JlfVZv2j8NO4LeJZRBJQOLt4",
+  authDomain: "boys-6b64e.firebaseapp.com",
+  projectId: "boys-6b64e",
+  storageBucket: "boys-6b64e.firebasestorage.app",
+  messagingSenderId: "528645347395",
+  appId: "1:528645347395:web:fcdfb04ac0f3dac2aedcf6"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -411,6 +433,33 @@ const bnSideLabels = {purbo:'পূর্ব', poschim:'পশ্চিম'};
 function bnBlockLabel(id){
   const [, floor, sideKey] = id.match(/^floor(\d+)_(\w+)$/);
   return `${bnFloorNames[floor]} তলা — ${bnSideLabels[sideKey]} ব্লক`;
+}
+
+// Convert Bengali digits in a string to English digits, then pull out the first number
+function extractQty(qtyStr){
+  if(!qtyStr) return 1;
+  const enDigitMap = {'০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9'};
+  const converted = String(qtyStr).split('').map(ch => enDigitMap[ch] ?? ch).join('');
+  const match = converted.match(/\d+/);
+  return match ? parseInt(match[0], 10) : 1;
+}
+
+// Build the "চাহিদার সারসংক্ষেপ" line by aggregating item quantities across all rooms in the block
+function buildSummaryLine(data){
+  const totals = new Map();
+  data.forEach(d=>{
+    (d.items||[]).forEach(item=>{
+      const name = (item.name||'').trim();
+      if(!name) return;
+      const qty = extractQty(item.qty);
+      totals.set(name, (totals.get(name)||0) + qty);
+    });
+  });
+
+  const parts = [...totals.entries()].map(([name, total]) => `${name} (${toBn(total)}টি)`);
+  if(parts.length === 0) return '—';
+  if(parts.length === 1) return parts[0] + '।';
+  return parts.slice(0, -1).join(', ') + ', এবং ' + parts[parts.length-1] + '।';
 }
 
 let selectedBlock = null; // {id, label}
@@ -462,10 +511,12 @@ function showView(name){
 
 document.getElementById('go-add').addEventListener('click', ()=>{
   if(!selectedBlock) return;
+  existingDocId = null;
   document.getElementById('add-block-title').textContent = selectedBlock.label + ' — New Entry';
   document.getElementById('room-number').value = '';
   document.getElementById('extra-note').value = '';
   document.getElementById('items-container').innerHTML = '';
+  document.getElementById('existing-room-notice').classList.add('hidden');
   addItemRow();
   showView('add');
 });
@@ -479,6 +530,49 @@ document.getElementById('go-view').addEventListener('click', ()=>{
 document.getElementById('back-from-add').addEventListener('click', ()=> showView('home'));
 document.getElementById('back-from-list').addEventListener('click', ()=> showView('home'));
 document.getElementById('cancel-add').addEventListener('click', ()=> showView('home'));
+
+/* ---------- Detect an already-submitted room ---------- */
+let existingDocId = null; // set when the currently typed room number already has an entry
+
+async function checkExistingRoom(){
+  const room = document.getElementById('room-number').value.trim();
+  const notice = document.getElementById('existing-room-notice');
+
+  existingDocId = null;
+  notice.classList.add('hidden');
+
+  if(!room || !selectedBlock) return;
+
+  try{
+    const snap = await db.collection(COLLECTION)
+      .where('blockId', '==', selectedBlock.id)
+      .where('room', '==', room)
+      .limit(1)
+      .get();
+
+    if(snap.empty) return;
+
+    const doc = snap.docs[0];
+    const data = doc.data();
+    existingDocId = doc.id;
+
+    // Show what's already there and let the user add to / edit it
+    document.getElementById('items-container').innerHTML = '';
+    if((data.items||[]).length){
+      data.items.forEach(i => addItemRow(i.name, i.qty));
+    }else{
+      addItemRow();
+    }
+    document.getElementById('extra-note').value = data.note || '';
+
+    notice.textContent = `রুম ${room}-এর জন্য আগে থেকেই একটি চাহিদা জমা আছে — সেটা নিচে দেখানো হলো। চাইলে নতুন আইটেম যোগ করুন বা বিদ্যমানগুলো পরিবর্তন করে আবার Submit চাপুন, এটি আগের এন্ট্রিটাই আপডেট করবে।`;
+    notice.classList.remove('hidden');
+  }catch(err){
+    console.error(err);
+  }
+}
+
+document.getElementById('room-number').addEventListener('blur', checkExistingRoom);
 
 /* ---------- Item rows (add demand form) ---------- */
 function addItemRow(name='', qty=''){
@@ -515,15 +609,25 @@ document.getElementById('submit-demand').addEventListener('click', async ()=>{
   btn.innerHTML = '<span class="spin"></span> Submitting...';
 
   try{
-    await db.collection(COLLECTION).add({
-      blockId: selectedBlock.id,
-      blockLabel: selectedBlock.label,
-      room,
-      items,
-      note,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    toast('Submitted successfully ✓');
+    if(existingDocId){
+      await db.collection(COLLECTION).doc(existingDocId).update({
+        items,
+        note,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      toast('Updated existing entry ✓');
+    }else{
+      await db.collection(COLLECTION).add({
+        blockId: selectedBlock.id,
+        blockLabel: selectedBlock.label,
+        room,
+        items,
+        note,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      toast('Submitted successfully ✓');
+    }
+    existingDocId = null;
     showView('home');
   }catch(err){
     console.error(err);
@@ -610,13 +714,15 @@ async function generatePdfForBlock(btn){
     document.getElementById('pdf-block-name').textContent = bnLabel;
     document.getElementById('pdf-block-name-2').textContent = bnLabel;
     document.getElementById('pdf-block-name-3').textContent = bnLabel;
+    document.getElementById('pdf-summary-line').textContent = buildSummaryLine(currentBlockData);
 
     const tbody = document.querySelector('#pdf-table tbody');
     tbody.innerHTML = '';
     currentBlockData.forEach(d=>{
-      const itemsStr = d.items.map(i => i.qty ? `${i.name} (${i.qty})` : i.name).join(', ');
+      const namesStr = (d.items||[]).map(i => i.name).filter(Boolean).join(', ');
+      const workStr = d.note ? `${namesStr} (${d.note})` : namesStr;
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${escapeHtml(d.room)}</td><td>${escapeHtml(itemsStr)}</td><td>${escapeHtml(d.note||'—')}</td>`;
+      tr.innerHTML = `<td>${escapeHtml(d.room)}</td><td>${escapeHtml(workStr)}</td><td>১ সেট</td>`;
       tbody.appendChild(tr);
     });
 
