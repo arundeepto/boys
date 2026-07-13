@@ -240,7 +240,7 @@
   }
 
   /* ---- Printable PDF template (off-screen) ---- */
-  #pdf-render{
+  .pdf-page{
     position:fixed;
     top:0;left:-9999px;
     width:794px;
@@ -249,14 +249,13 @@
     padding:50px 56px;
     font-family:'Hind Siliguri', sans-serif;
   }
-  #pdf-render h2{font-family:'Tiro Bangla',serif;text-align:center;font-size:1.3rem;margin-bottom:2px;}
-  #pdf-render .pdf-sub{text-align:center;font-size:.85rem;color:#444;margin-bottom:18px;}
-  #pdf-render p{line-height:1.9;font-size:.95rem;text-align:justify;margin:10px 0;}
-  #pdf-render table{width:100%;border-collapse:collapse;margin-top:16px;font-size:.85rem;}
-  #pdf-render th,#pdf-render td{border:1px solid #999;padding:7px 9px;}
-  #pdf-render th{background:#eee;}
-  #pdf-render .sign{margin-top:50px;font-size:.9rem;}
-  #pdf-render .pdf-attachment{margin-top:60px;padding-top:30px;border-top:1px dashed #bbb;}
+  .pdf-page h2{font-family:'Tiro Bangla',serif;text-align:center;font-size:1.3rem;margin-bottom:2px;}
+  .pdf-page .pdf-sub{text-align:center;font-size:.85rem;color:#444;margin-bottom:18px;}
+  .pdf-page p{line-height:1.9;font-size:.95rem;text-align:justify;margin:10px 0;}
+  .pdf-page table{width:100%;border-collapse:collapse;margin-top:16px;font-size:.85rem;}
+  .pdf-page th,.pdf-page td{border:1px solid #999;padding:7px 9px;}
+  .pdf-page th{background:#eee;}
+  .pdf-page .sign{margin-top:50px;font-size:.9rem;}
 </style>
 </head>
 <body>
@@ -344,8 +343,8 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- Off-screen printable template used for PDF export -->
-<div id="pdf-render">
+<!-- Off-screen printable template used for PDF export: page 1 = letter, page 2 = demand table -->
+<div class="pdf-page" id="pdf-page-letter">
   <p id="pdf-date"></p>
   <p>বরাবর,<br>অধ্যক্ষ মহোদয়,<br>নীলফামারী মেডিকেল কলেজ,<br>নীলফামারী।</p>
   <p><strong>বিষয়:</strong> করতোয়া ছাত্রাবাসের <span id="pdf-block-name"></span>-এর মেরামত ও প্রয়োজনীয় সরঞ্জামাদি সরবরাহের আবেদন।</p>
@@ -353,7 +352,7 @@
     জনাব,<br>
     সবিনয় নিবেদন এই যে, আমরা নীলফামারী মেডিকেল কলেজের করতোয়া ছাত্রাবাসের <span id="pdf-block-name-2"></span>-এর আবাসিক শিক্ষার্থী।
     বর্তমানে আমাদের ব্লকের বেশ কিছু কক্ষের বৈদ্যুতিক ও স্যানিটারি সরঞ্জামাদি নষ্ট হয়ে যাওয়ায় আমরা দৈনন্দিন পড়াশোনা ও বসবাসের ক্ষেত্রে সমস্যার সম্মুখীন হচ্ছি।
-    রুমভিত্তিক চাহিদা ও সমস্যার বিস্তারিত বিবরণ সংযুক্ত তালিকায় দেওয়া হলো।
+    রুমভিত্তিক চাহিদা ও সমস্যার বিস্তারিত বিবরণ সংযুক্ত তালিকায় (২য় পৃষ্ঠা) দেওয়া হলো।
   </p>
   <p>
     এমতাবস্থায়, আমাদের ব্লকের স্বাভাবিক পরিবেশ বজায় রাখতে এবং ছাত্রাবাসের সুযোগ-সুবিধা নিশ্চিত করতে প্রয়োজনীয় সরঞ্জামাদি সরবরাহ ও মেরামতের জন্য
@@ -370,21 +369,21 @@
     আপনার অনুগত,<br>
     করতোয়া ছাত্রাবাসের <span id="pdf-block-name-3"></span>-এর আবাসিক শিক্ষার্থীবৃন্দ।
   </div>
+</div>
 
-  <div class="pdf-attachment">
-    <p><strong>সংযুক্তি: রুমভিত্তিক চাহিদার তালিকা</strong></p>
-    <table id="pdf-table">
-      <thead>
-        <tr><th style="width:15%;">রুম নং/স্থান</th><th>প্রয়োজনীয় কাজ ও মালামাল</th><th style="width:16%;">পরিমাণ</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+<div class="pdf-page" id="pdf-page-table">
+  <p><strong>সংযুক্তি: রুমভিত্তিক চাহিদার তালিকা</strong></p>
+  <table id="pdf-table">
+    <thead>
+      <tr><th style="width:15%;">রুম নং/স্থান</th><th>প্রয়োজনীয় কাজ ও মালামাল</th><th style="width:16%;">পরিমাণ</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-    <div class="sign">
-      সুপারিশক্রমে,<br>
-      হোস্টেল সুপার,<br>
-      করতোয়া ছাত্রাবাস।
-    </div>
+  <div class="sign">
+    সুপারিশক্রমে,<br>
+    হোস্টেল সুপার,<br>
+    করতোয়া ছাত্রাবাস।
   </div>
 </div>
 
@@ -444,19 +443,30 @@ function extractQty(qtyStr){
   return match ? parseInt(match[0], 10) : 1;
 }
 
+// Normalize an item name for grouping: trim, collapse spaces, and ignore case
+// so "Fan", "fan", "FAN" (or extra spacing) are treated as the same item.
+function normalizeItemKey(name){
+  return (name||'').trim().replace(/\s+/g,' ').toLowerCase();
+}
+
 // Build the "চাহিদার সারসংক্ষেপ" line by aggregating item quantities across all rooms in the block
 function buildSummaryLine(data){
-  const totals = new Map();
+  const totals = new Map(); // normalized key -> {label, total}
   data.forEach(d=>{
     (d.items||[]).forEach(item=>{
-      const name = (item.name||'').trim();
-      if(!name) return;
+      const rawName = (item.name||'').trim();
+      if(!rawName) return;
+      const key = normalizeItemKey(rawName);
       const qty = extractQty(item.qty);
-      totals.set(name, (totals.get(name)||0) + qty);
+      if(totals.has(key)){
+        totals.get(key).total += qty;
+      }else{
+        totals.set(key, {label: rawName, total: qty});
+      }
     });
   });
 
-  const parts = [...totals.entries()].map(([name, total]) => `${name} (${toBn(total)}টি)`);
+  const parts = [...totals.values()].map(({label, total}) => `${label} (${toBn(total)}টি)`);
   if(parts.length === 0) return '—';
   if(parts.length === 1) return parts[0] + '।';
   return parts.slice(0, -1).join(', ') + ', এবং ' + parts[parts.length-1] + '।';
@@ -726,29 +736,38 @@ async function generatePdfForBlock(btn){
       tbody.appendChild(tr);
     });
 
-    const target = document.getElementById('pdf-render');
-    const canvas = await html2canvas(target, {scale:2, backgroundColor:'#ffffff'});
-    const imgData = canvas.toDataURL('image/png');
+    const target1 = document.getElementById('pdf-page-letter');
+    const target2 = document.getElementById('pdf-page-table');
+    const canvas1 = await html2canvas(target1, {scale:2, backgroundColor:'#ffffff'});
+    const canvas2 = await html2canvas(target2, {scale:2, backgroundColor:'#ffffff'});
 
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'pt', 'a4');
     const pageW = pdf.internal.pageSize.getWidth();
     const pageH = pdf.internal.pageSize.getHeight();
-    const imgW = pageW;
-    const imgH = (canvas.height * imgW) / canvas.width;
 
-    let heightLeft = imgH;
-    let position = 0;
+    function addCanvasPages(canvas, isFirst){
+      const imgData = canvas.toDataURL('image/png');
+      const imgW = pageW;
+      const imgH = (canvas.height * imgW) / canvas.width;
 
-    pdf.addImage(imgData, 'PNG', 0, position, imgW, imgH);
-    heightLeft -= pageH;
+      let heightLeft = imgH;
+      let position = 0;
 
-    while(heightLeft > 0){
-      position = heightLeft - imgH;
-      pdf.addPage();
+      if(!isFirst) pdf.addPage();
       pdf.addImage(imgData, 'PNG', 0, position, imgW, imgH);
       heightLeft -= pageH;
+
+      while(heightLeft > 0){
+        position = heightLeft - imgH;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgW, imgH);
+        heightLeft -= pageH;
+      }
     }
+
+    addCanvasPages(canvas1, true);   // page 1: the application letter
+    addCanvasPages(canvas2, false);  // page 2 (+): the room-wise demand table
 
     pdf.save(`korotoa-demand-${selectedBlock.id}.pdf`);
   }catch(err){
